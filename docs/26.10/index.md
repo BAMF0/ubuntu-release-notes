@@ -123,6 +123,136 @@ Valkey was updated to the latest major release 9.1, starting with 9.1.2. This in
 
 For more information on the new version, see the [Valkey 9.1 blog post](https://valkey.io/blog/valkey-9-1-delivers-improvements-in-security-performance-and-more/). Release notes are available on the [Valkey project GitHub](https://github.com/valkey-io/valkey/releases).
 
+#### ssl-cert 1.2.0
+
+`ssl-cert` is a simple wrapper around OpenSSL. It provides the
+`make-ssl-cert` helper script and generates the "snakeoil" self-signed
+TLS certificate/key pair (`/etc/ssl/certs/ssl-cert-snakeoil.pem` and
+`/etc/ssl/private/ssl-cert-snakeoil.key`) used by services that need a
+default certificate out of the box (e.g. Apache, Postfix, Dovecot). It
+also manages the `ssl-cert` system group that grants read access to
+private keys.
+
+ * Increased the default generated key length from 2048 to 3072 bits, while leaving existing
+   2048-bit keys untouched.
+ * Allowed separate key/cert file paths even outside the `generate-default-snakeoil` mode.
+ * Added the ability to override the certificate's CN and SubjectAltName from the command line.
+
+#### net-snmp 5.9.5.2
+
+`net-snmp` provides the suite of applications used to implement the Simple
+Network Management Protocol (SNMP v1, v2c, v3), including `snmpd` (the
+agent/daemon), `snmptrapd` (trap receiver), command-line query tools
+(`snmpget`, `snmpwalk`, etc.), and the development libraries (`libsnmp-dev`)
+used by monitoring software to query and manage network devices and hosts.
+
+- **snmplib**
+  - Added support for `IPV6_RECVPKTINFO`.
+  - Ported the SSH domain transport to FreeBSD.
+- **MIBs**
+  - `EtherLike-MIB`: optimized the Linux implementation to use netlink
+    statistics.
+  - `LM-SENSORS-MIB`: added support for negative temperatures.
+  - `SNMP-TLS-TM-MIB`: updated to RFC 9456 and allowed TLS protocols higher
+    than TLS 1.0.
+  - `HOST-RESOURCES-MIB`: added support for RPM SQLite DB background.
+
+#### rdma-core 64.0
+
+`rdma-core` provides the userspace components for the Linux RDMA
+(Remote Direct Memory Access) subsystem used to configure and use
+InfiniBand/RoCE/iWARP networking and storage (NVMe-oF, SRP, etc.) devices.
+
+- **mlx5 provider**
+  - Added DMA-buf heap and Confidential-Computing (CoCo) shared-memory
+    allocation support, including a new internal DMA-buf heap allocator
+    library in `libibverbs` and per-buffer dmabuf UMEM attribute
+    passthrough to the kernel.
+  - Introduced `mlx5dv_devx_uar_export_dmabuf_fd()` and DM export DMABUF
+    fd support.
+  - Enabled ST64B for BlueFlame writes (with aarch64 `mmio_memcpy_x64`
+    support).
+- **bnxt_re provider**: added support for QP rate limiting
+  (`ibv_modify_qp_rate_limit`) and reporting of rate-limit capabilities.
+- **efa provider**: added a new completion status for feature mismatch;
+  added QP generation to the device request ID; removed unused `cur_qp`
+  caching in `efa_poll_sub_cq`.
+- **mana provider**: added Unreliable-Connection (UC) QP support, robust
+  `udata` handling, and fixed lost CQ notifications when re-arming
+  without polling (the `cqid-check` fix that Ubuntu had carried as a local
+  patch in 61.0-2ubuntu3 is included upstream as of 63.0-1).
+- **ionic provider**: fixed `sq_sig_all` handling for signaled
+  completions.
+- **pyverbs**: numerous enhancements — WR property getters, ParentDomain
+  CC unprotected allocation, CoCo DMA bounce device capability flag,
+  `ibv_buf` provider-aware buffer support, fixed a `MREx.close()`
+  deallocation crash, replaced unsafe `WeakSet.pop()` usage, and other
+  cleanup/robustness fixes.
+- **rc_pingpong**: added unprotected memory allocation for CoCo guests,
+  buffer-allocation ordering fix, and preference for IPv6 wildcard when
+  binding the control channel.
+
+#### libmail-dmarc-perl 1.20260306
+
+`libmail-dmarc-perl` is a Perl implementation of DMARC (Domain-based Message
+Authentication, Reporting and Conformance). It is used by MTAs and filtering
+tools (e.g. SpamAssassin) to:
+
+- Validate that incoming messages align with the purported sender's SPF/DKIM
+  policy (`Mail::DMARC::PurePerl->validate`).
+- Receive, store and view DMARC aggregate/forensic reports from other mail
+  servers (report store with SQLite/MySQL/PostgreSQL backends, CLI, and web
+  viewers).
+- Send DMARC reports to author domains as an MTA operator.
+
+Between Ubuntu 26.04 LTS (Resolute Raccoon) and Ubuntu 26.10 (Stonking Stingray), `libmail-dmarc-perl` moved from upstream
+`1.20250805` to `1.20260306`, bringing new report-handling robustness
+(gzip/zip ingestion, error-tolerant archive parsing), a modernized web
+reporting UI (DataTables), new filtering/CLI options for `dmarc_view_reports`,
+and a new SQLite-MySQL migration helper.
+
+- New `dmarc_sqlite_to_mysql` migration script.
+- MySQL: enable SSL for newer MySQL; fixed schema for new imports.
+- `dmarc_receive`: `eval` `unzip`/`ungzip`, so imperfect archives no longer interrupt
+  the processing loop.
+- `dmarc_receive`: support for gzip, zip, and XML report files (#277).
+
+#### strongswan 6.0.7
+
+`strongswan` is a complete, open-source **IKEv1/IKEv2 IPsec** implementation
+for Linux (and other UNIX-like systems). It provides the `charon` and
+`starter` daemons, the `swanctl`/`ipsec` command-line tools, and a large set
+of plugins (EAP methods, PKCS#7/PKCS#11, X.509, RADIUS, TNC, etc.) used to
+build site-to-site VPNs, remote-access VPNs, and host-to-host IPsec
+connections.
+
+- Added support for forwarding certain ICMP errors on Linux 6.9+ even when
+  the source address doesn't match traffic selectors.
+- `dhcp` plugin now tracks leases across make-before-break
+  reauthentications.
+- `charon-cmd` gained childless IKE SA initiation and IKEv2 PSK
+  authentication support.
+- **6.0.6**
+  - Fixed CVE-2026-35328 (libtls `supported_versions` → infinite loop).
+  - Fixed CVE-2026-35329 (pkcs7/libstrongswan encrypted PKCS#7 → crash).
+  - Fixed CVE-2026-35330 (libsimaka EAP-SIM/AKA attributes → infinite
+    loop/heap overflow, potential RCE).
+  - Fixed CVE-2026-35331 (constraints plugin: certificates violating X.509
+    name constraints could be accepted).
+  - Fixed CVE-2026-35332 (libtls ECDH public values on TLS < 1.3 → crash).
+  - Fixed CVE-2026-35333 (libradius RADIUS attributes → infinite
+    loop/out-of-bounds read).
+  - Fixed CVE-2026-35334 (gmp plugin RSA decryption → crash).
+  - Made Botan RNG types configurable in the botan plugin.
+- **6.0.7**
+  - Fixed CVE-2026-47895 (libstrongswan identity cloning → double-free,
+    potential RCE).
+  - Validity of pre-trusted self-signed certificates (and the last
+    certificate in an incomplete trust chain) is now enforced.
+  - `list-conn` event now includes IKE/IPsec proposals.
+  - New `--ike` filter option for `swanctl --list-conns`.
+  - Enabled mixed-family IPComp configs on Linux 6.3+.
+
 ### Development features
 
 #### Toolchain upgrades
