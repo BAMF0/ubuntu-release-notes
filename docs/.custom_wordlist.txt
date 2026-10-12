@@ -276,6 +276,7 @@ debhelper
 debootstrap
 debsums
 decompressor
+deconfiguration
 deduplicate
 Deerling
 Delcatty
@@ -706,6 +707,7 @@ memfd
 memlock
 Memop
 memorytexture
+memslots
 Merrifield
 metacharacters
 metapackage
@@ -1101,6 +1103,7 @@ speex
 Sphinx
 Spiana
 Spinlock
+Spyre
 Spread
 spread_test_example
 SRUs
@@ -1241,6 +1244,7 @@ uevents
 ufw
 UIDs
 ukify
+Ultravisor
 umask
 umounted
 uname
