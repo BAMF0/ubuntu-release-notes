@@ -72,10 +72,6 @@ App Center adds a dedicated Drivers page where you can review the available grap
 
 Driver choices are presented with clearer metadata to help you compare the options. Available choices depend on the system's hardware and enabled software sources.
 
-#### App Center update and package-detail fixes
-
-App Center filters out phased updates that are not yet available to a system, avoiding misleading update entries. Debian package details also open more reliably when the PackageKit service has stopped and restarted.
-
 #### On-demand multimedia codecs
 
 App Center can install the codecs needed for one-time playback when a media file uses a codec that is not installed. Some high-quality codecs are proprietary and are not included in the default installation.
@@ -460,6 +456,14 @@ To switch between the Rust and GNU implementations of coreutils, refer to {ref}`
 
 ## Backwards-incompatible changes
 
+### Desktop changes
+
+#### WEP Wi-Fi security is no longer supported in Settings
+
+GNOME 51 removes support in Settings for connecting to Wi-Fi networks that use Wired Equivalent Privacy (WEP).
+
+WEP is an obsolete and insecure wireless security standard. Use a network configured with a modern security protocol instead., fix
+
 ### Server changes
 
 #### OpenSSH split between two packages
@@ -528,12 +532,6 @@ As announced in previous {ref}`release notes <ubuntu-26.04-lts-release-notes>`, 
 
 ## Deprecated features
 
-### Desktop deprecations
-
-#### WEP Wi-Fi security is no longer supported in Settings
-
-GNOME 51 removes support in Settings for connecting to Wi-Fi networks that use WEP. WEP is an obsolete and insecure wireless security standard; use a network configured with a modern security protocol instead., fix
-
 ### Server deprecations
 
 #### BerkeleyDB deprecated in Postfix
@@ -556,6 +554,10 @@ See [Postfix Non-Berkeley-DB migration](https://www.postfix.org/NON_BERKELEYDB_R
 ## Bug fixes
 
 ### Desktop fixes
+
+#### Fixes to updates and package details in App Center
+
+App Center filters out phased updates that are not yet available to a system, avoiding misleading update entries. Debian package details also open more reliably when the PackageKit service has stopped and restarted.
 
 #### Desktop icons remain visible after a release upgrade
 
