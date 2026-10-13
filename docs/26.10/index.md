@@ -574,4 +574,8 @@ On the packaging side, squid now builds against OpenSSL 4.
 
 ## Official flavors
 
+Find the release notes for the official flavors at the following links:
+
+* [Ubuntu Budgie Release Notes](https://ubuntubudgie.org/blog/ubuntu-budgie-2610-release-notes/)
+
 ## More information
