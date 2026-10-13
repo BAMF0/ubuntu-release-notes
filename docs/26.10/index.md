@@ -318,15 +318,6 @@ connections.
 
 ### Enterprise features
 
-#### authd user management and Entra ID authentication
-
-Authd, Ubuntu's cloud identity integration, adds `authctl` user and group management, Entra ID password-and-MFA sign-in, and stable OIDC identity matching ([LP: #2168531](https://bugs.launchpad.net/ubuntu/+source/authd/+bug/2168531)). Authd is not enabled by default on Ubuntu Desktop. See the [authd documentation](https://documentation.ubuntu.com/authd/).
-
-
-#### Native certificate auto-enrollment with ADSys
-
-ADSys 0.17 adds native certificate auto-enrollment for Ubuntu clients joined to Active Directory. It discovers certificate templates through LDAP and enrolls with Active Directory Certificate Services, without requiring a separately configured CEP/CES service; AD CS must still be configured. ADSys is not included in the default Desktop image. See [LP: #2169827](https://bugs.launchpad.net/ubuntu/+source/adsys/+bug/2169827), the [ADSys 0.17.0 release changelog](https://launchpad.net/ubuntu/+source/adsys/0.17.0), and the [certificate auto-enrollment guide](https://documentation.ubuntu.com/adsys/stable/how-to/certificates/).
-
 ### Cloud features
 
 ### Security features
