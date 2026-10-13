@@ -25,6 +25,54 @@ Release schedule <schedule>
 
 ### Desktop features
 
+#### GNOME 51
+
+Highlights across the desktop include:
+
+* **Performance** many enhancements to bring a smoother, more responsive desktop.
+* **Displays** remembers monitor brightness across reboots and HDR changes. Frame scheduling improvements make animations smoother under load, and monitor arrangement uses improved center-aligned snapping.
+* **Settings** adds automatic screen rotation and orientation lock on devices with an accelerometer, improves display arrangement, and can disable the touchpad automatically when a mouse is connected. Network settings now support DNS search domains, and fingerprint enrollment has an improved interface.
+* **Files** gives a count when dragging multiple files, improves selection behavior, groups file notifications, and performs some file operations more responsively.
+* **Calendar** is more responsive, especially in Month view, and uses less data when syncing.
+* **Remote Desktop** supports remote smartcard use and Kerberos authentication. Remote Login also supports SSH socket-activated servers.
+* **Papers** can add visual signatures to documents. These are annotations and do not cryptographically verify a document's authenticity.
+
+For more information, see the [GNOME 51 release notes](https://release.gnome.org/51/).
+
+#### Accessibility improvements and fixes
+
+Accessibility has been improved across GNOME, App Center, the desktop shell and the Flutter toolkit. GNOME 51 extends Reduced Motion to more parts of the desktop, lets users adjust screenshot selections with the keyboard, and improves Orca announcements and app-grid navigation. The Accessibility settings also gain an option to disable the focus-ring timeout.
+
+#### New desktop wallpapers
+
+Ubuntu 26.10 includes new Stonking Stingray wallpapers, including designs selected through the community wallpaper competition. See the [wallpaper announcement](https://ubuntu.com/blog/grace-on-the-currents-stonking-stingray).
+
+#### Ubuntu Certified hardware status in Settings
+
+Settings can show whether a computer is certified for Ubuntu. The status is checked using the Ubuntu Hardware API, with caching to avoid unnecessary repeated checks. The `hwctl` client is included as a snap. For information about hardware data used for certification checks, see the [System Information Notice](https://canonical.com/legal/systems-information-notice#metrics-collected-by-ubuntu-certified-client).
+
+#### A unified app-details view in App Center
+
+App Center now presents Snap and Debian package details in a unified app-details view. It brings information such as the publisher, ratings, permissions, version, package size, screenshots, and description together, with the relevant install, open, or uninstall action.
+
+#### App Center driver support
+
+App Center adds a dedicated Drivers page for reviewing available graphics-driver options, including NVIDIA driver branches. Driver choices are presented with clearer metadata to help users compare options. Available choices depend on the system's hardware and enabled software sources.
+
+#### App Center update and package-detail fixes
+
+App Center filters out phased updates that are not yet available to a system, avoiding misleading update entries. Debian package details also open more reliably when the PackageKit service has stopped and restarted.
+
+#### On-demand multimedia codecs
+
+App Center can install the codecs needed for one-time playback when a media file uses a codec that is not installed. Some high-quality codecs are proprietary and are not included in the default installation.
+
+#### Myna speech-to-text preview
+
+Myna is an early speech-to-text preview for Ubuntu Desktop. Hold a configurable key to dictate into the focused app; transcription runs locally, with no audio sent to a network service. Myna is not preinstalled, and its features may change before stable release.
+
+Read the [Myna technology preview announcement](https://ubuntu.com/blog/myna-speech-to-text-technology-preview-available).
+
 ### Server features
 
 #### FreeRADIUS 3.2.10
@@ -270,6 +318,15 @@ connections.
 
 ### Enterprise features
 
+#### authd user management and Entra ID authentication
+
+Authd, Ubuntu's cloud identity integration, adds `authctl` user and group management, Entra ID password-and-MFA sign-in, and stable OIDC identity matching ([LP: #2168531](https://bugs.launchpad.net/ubuntu/+source/authd/+bug/2168531)). Authd is not enabled by default on Ubuntu Desktop. See the [authd documentation](https://documentation.ubuntu.com/authd/).
+
+
+#### Native certificate auto-enrollment with ADSys
+
+ADSys 0.17 adds native certificate auto-enrollment for Ubuntu clients joined to Active Directory. It discovers certificate templates through LDAP and enrolls with Active Directory Certificate Services, without requiring a separately configured CEP/CES service; AD CS must still be configured. ADSys is not included in the default Desktop image. See [LP: #2169827](https://bugs.launchpad.net/ubuntu/+source/adsys/+bug/2169827), the [ADSys 0.17.0 release changelog](https://launchpad.net/ubuntu/+source/adsys/0.17.0), and the [certificate auto-enrollment guide](https://documentation.ubuntu.com/adsys/stable/how-to/certificates/).
+
 ### Cloud features
 
 ### Security features
@@ -345,8 +402,6 @@ To switch between the Rust and GNU implementations of coreutils, refer to {ref}`
 
 ## Backwards-incompatible changes
 
-### Desktop changes
-
 ### Server changes
 
 #### OpenSSH split between two packages
@@ -398,8 +453,6 @@ See the [HAProxy 3.3](https://www.haproxy.com/blog/announcing-haproxy-3-3) and [
 
 ### Development changes
 
-### Enterprise changes
-
 ### Cloud changes
 
 ### OpenStack
@@ -413,6 +466,10 @@ See the [HAProxy 3.3](https://www.haproxy.com/blog/announcing-haproxy-3-3) and [
 
 ### Desktop deprecations
 
+#### WEP Wi-Fi security is no longer supported in Settings
+
+GNOME 51 removes support in Settings for connecting to Wi-Fi networks that use WEP. WEP is an obsolete and insecure wireless security standard; use a network configured with a modern security protocol instead., fix
+
 ### Server deprecations
 
 #### BerkeleyDB deprecated in Postfix
@@ -422,8 +479,6 @@ BerkeleyDB support has been deprecated in Postfix. This affects the `hash:` and 
 See [Postfix Non-Berkeley-DB migration](https://www.postfix.org/NON_BERKELEYDB_README.html) for more information.
 
 ### Development deprecations
-
-### Enterprise deprecations
 
 ### Cloud deprecations
 
@@ -437,6 +492,30 @@ See [Postfix Non-Berkeley-DB migration](https://www.postfix.org/NON_BERKELEYDB_R
 ## Bug fixes
 
 ### Desktop fixes
+
+#### Desktop icons remain visible after a release upgrade
+
+Fixed an issue where desktop icons could disappear after upgrading Ubuntu. See [LP: #2164884](https://bugs.launchpad.net/bugs/2164884).
+
+#### Improved rendering with fractionally scaled monitors
+
+Fixed a Mutter issue that could cause a black screen or invalid page flips when using vertically arranged monitors with fractional scaling. See [Mutter merge request 3786](https://gitlab.gnome.org/GNOME/mutter/-/merge_requests/3786).
+
+#### Faster loading of desktop icons
+
+Fixed an issue that could leave icons blank or make them take several seconds to appear. See [LP: #2162035](https://bugs.launchpad.net/bugs/2162035).
+
+#### Correctly apply the desktop theme
+
+Fixed an issue where the selected theme was not applied correctly. See [LP: #2161877](https://bugs.launchpad.net/bugs/2161877).
+
+#### Local password sign-in after device authentication
+
+Fixed a GNOME Shell issue where the local password entry could fail to appear after device authentication. Users can now continue signing in with their local password when required. See [LP: #2160622](https://bugs.launchpad.net/ubuntu/+source/gnome-shell/+bug/2160622).
+
+#### Active Directory setup in autoinstall
+
+Fixed an issue where an autoinstall with interactive identity and Active Directory sections could fail to ask for the Active Directory password, leaving the computer unjoined to the domain. The installer now presents the required Active Directory step. See [LP: #2065109](https://bugs.launchpad.net/subiquity/+bug/2065109).
 
 ### Server fixes
 
@@ -486,8 +565,6 @@ On the packaging side, squid now builds against OpenSSL 4.
 
 ### Development fixes
 
-### Enterprise fixes
-
 ### Cloud fixes
 
 ### Security fixes
@@ -501,11 +578,45 @@ On the packaging side, squid now builds against OpenSSL 4.
 
 ### Desktop issues
 
+#### Some upgrades may stop on a dangling `/lib32` symlink
+
+On systems with a dangling `/lib32` symlink, the upgrade can stop while installing `base-files`. This has been reported on systems upgraded from older Ubuntu releases, including during an upgrade to 26.04. The `ubuntu-release-upgrader` fix for Stonking is still in progress; the exact impact on upgrades from 26.04 to 26.10 is not yet clear. See [LP: #2131303](https://bugs.launchpad.net/bugs/2131303).
+
+#### Future upgrades may be blocked for unsupported `/boot` configurations
+
+Planned bootloader changes in a future Ubuntu release will drop support for some less-common `/boot` configurations, including encrypted `/boot`, RAID-5/6, Apple partition tables, and filesystems such as Btrfs, HFS+, XFS, and ZFS. Work is under way to have the release upgrader detect affected systems and block an unsafe upgrade. See [LP: #2170211](https://bugs.launchpad.net/bugs/2170211).
+
+#### Legacy GRUB changes can prevent booting with TPM-backed full-disk encryption
+
+On systems using TPM-backed full-disk encryption, snapd manages the boot configuration. A Launchpad report found that running `update-grub` after applying conventional GRUB customizations could leave a system unable to boot. The Stonking fix is still in progress. See [LP: #2157702](https://bugs.launchpad.net/bugs/2157702).
+
+#### TPM-backed encrypted autoinstall may fail in virtual machines
+
+When using autoinstall with TPM-backed full-disk encryption in a virtual machine, the `accepted-errors: running-in-vm` option may fail with an installer error. The fix is in progress. See [LP: #2170594](https://bugs.launchpad.net/bugs/2170594).
+
+#### Display freezes on some AMD/NVIDIA dual-GPU laptops
+
+On some laptops with both AMD integrated graphics and a discrete GPU, the built-in display may freeze when panel self-refresh is active, particularly when an external display is connected. See [LP: #2162904](https://bugs.launchpad.net/bugs/2162904).
+
+#### Wi-Fi instability on some Intel AX211 systems
+
+Some systems with Intel Wi-Fi 6E AX211 may experience firmware crashes and dropped Wi-Fi connections. The issue is hardware-specific and remains under investigation for Stonking. See [LP: #2157682](https://bugs.launchpad.net/bugs/2157682).
+
+#### Keyboard may not work on some Snapdragon X2 Elite laptops
+
+A kernel 7.3 regression can select an incorrect keyboard clock rate on some Snapdragon X2 Elite laptops, leaving the built-in keyboard unusable, including in the live installer. A fix is being investigated. See [LP: #2169765](https://bugs.launchpad.net/bugs/2169765).
+
+#### Intel IPU cameras may fail during early boot or suspend
+
+On some systems with Intel IPU6 or IPU7 cameras, firmware may not be included in the initramfs when the driver is loaded early, preventing the camera driver from starting. Some Dell systems using the Intel IPU7 camera stack may also fail to suspend after camera activity. These issues apply only to systems using the affected camera drivers. See [LP: #2164611](https://bugs.launchpad.net/bugs/2164611) and [LP: #2158228](https://bugs.launchpad.net/bugs/2158228).
+
+#### Subtitles may fail in Showtime
+
+Showtime may not display subtitles, or video playback may hang when subtitle playback is changed. The issue is being addressed in the GStreamer base plugins. See [LP: #2119649](https://bugs.launchpad.net/bugs/2119649).
+
 ### Server issues
 
 ### Development issues
-
-### Enterprise issues
 
 ### Cloud issues
 
