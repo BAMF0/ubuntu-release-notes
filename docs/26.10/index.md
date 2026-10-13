@@ -515,7 +515,7 @@ Fixed a GNOME Shell issue where the local password entry could fail to appear af
 
 #### Active Directory setup in autoinstall
 
-Fixed an issue where an autoinstall with interactive identity and Active Directory sections could fail to ask for the Active Directory password, leaving the computer unjoined to the domain. The installer now presents the required Active Directory step. See [LP: #2065109](https://bugs.launchpad.net/subiquity/+bug/2065109).
+Fixed an issue where an autoinstall with interactive identity and Active Directory sections could fail to ask for the Active Directory password, leaving the computer not joined to the domain. The installer now presents the required Active Directory step. See [LP: #2065109](https://bugs.launchpad.net/subiquity/+bug/2065109).
 
 ### Server fixes
 
@@ -612,7 +612,7 @@ On some systems with Intel IPU6 or IPU7 cameras, firmware may not be included in
 
 #### Subtitles may fail in Showtime
 
-Showtime may not display subtitles, or video playback may hang when subtitle playback is changed. The issue is being addressed in the GStreamer base plugins. See [LP: #2119649](https://bugs.launchpad.net/bugs/2119649).
+Showtime may not display subtitles, or video playback may stall when subtitle playback is changed. The issue is being addressed in the GStreamer base plugins. See [LP: #2119649](https://bugs.launchpad.net/bugs/2119649).
 
 ### Server issues
 
