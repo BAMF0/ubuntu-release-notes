@@ -462,7 +462,7 @@ To switch between the Rust and GNU implementations of coreutils, refer to {ref}`
 
 GNOME 51 removes support in Settings for connecting to Wi-Fi networks that use Wired Equivalent Privacy (WEP).
 
-WEP is an obsolete and insecure wireless security standard. Use a network configured with a modern security protocol instead., fix
+WEP is an obsolete and insecure wireless security standard. Use a network configured with a modern security protocol instead.
 
 ### Server changes
 
