@@ -1,3 +1,7 @@
+---
+tocdepth: 3
+---
+
 (ubuntu-26.10-release-notes)=
 # Ubuntu 26.10 release notes
 
