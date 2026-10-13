@@ -518,6 +518,7 @@ initrdless
 Inkscape
 inlining
 inode
+Inspiron
 intel
 intelrdt
 interators
@@ -930,6 +931,8 @@ qeth
 qpdf
 qualcomm
 Quantal
+Zenbook
+Inspiron
 querydata
 quicksettings
 Quokka
@@ -1402,6 +1405,7 @@ Zbkx
 ZBook
 zcrypt
 zdev
+Zenbook
 zenity
 zeroconf
 Zicbop

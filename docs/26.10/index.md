@@ -73,6 +73,16 @@ Myna is an early speech-to-text preview for Ubuntu Desktop. Hold a configurable 
 
 Read the [Myna technology preview announcement](https://ubuntu.com/blog/myna-speech-to-text-technology-preview-available).
 
+#### TPM-backed FDE without a hardware root of trust
+
+Computers without a hardware root of trust can now be installed with TPM-backed full disk encryption (FDE), provided that a PIN or passphrase is also set on the TPM-backed key.
+
+This was already backported in Ubuntu Desktop 26.04.1. For reference, see [Hardware-backed disk encryption requirements](https://ubuntu.com/desktop/docs/en/latest/reference/hardware-backed-disk-encryption-requirements/).
+
+#### System-level opt-out for Ubuntu Insights
+
+Administrators can now opt out of anonymous Ubuntu Insights system report collection for the entire system. Enabling the configuration overrides individual opt-ins such that they are instead interpreted as opt-outs. Users with sufficient permissions can change this setting, either in the Settings application or by using Ubuntu Insights' command-line interface.
+
 ### Server features
 
 #### FreeRADIUS 3.2.10
@@ -310,11 +320,16 @@ connections.
 | GCC 🐄 | 15.2.0 | Includes latest patches for the GCC 15 series as well as support for C++ modules. [Release Notes](https://gcc.gnu.org/gcc-15/changes.html) |
 | .NET 🦄 | 10.0.112 | Updated .NET runtimes with latest security fixes and toolchain capabilities. [Release Notes](https://github.com/dotnet/core/blob/main/release-notes/10.0/10.0.12/10.0.112.md) |
 | Go 🐀 | 1.27 | Go 1.27 supports for generic methods and GODEBUG settings. [Release Notes](https://go.dev/doc/go1.27) |
-| LLVM 🐉 | 22.1.6 | Includes targeted bug fixes and stability improvements with early support for C2y named loops and expanded SSE, AVX, AVX-512 intrinsics. [Release Notes](https://discourse.llvm.org/t/llvm-22-1-6-released/90838) |
+| LLVM 🐉 | 22.1.8 | LLVM 22 adds support for newer Arm, RISC-V, and x86 CPUs and extensions, improves vectorization and ThinLTO, expands WebAssembly debugging in LLDB, and updates LLVM IR and APIs with some compatibility-breaking changes. [Release Notes](https://releases.llvm.org/22.1.0/docs/ReleaseNotes.html) |
 | OpenJDK ☕ | 25.0.4 | OpenJDK release with many stability improvements and patches. [Release Notes](https://mail.openjdk.org/archives/list/jdk-updates-dev@openjdk.org/thread/BRREMPN6BLLC2CYAKLXGRHHNMCIQQSR5/) |
 | Python 🐍 | 3.14.7 | Python 3.14.7 is the seventh maintenance release of 3.14, containing numerous bugfixes and improvements. [Release Notes](https://www.python.org/downloads/release/python-3147/) |
 | Rust 🦀 | 1.97.1 | Rust 1.97 stable toolchain with LLVM miscompilation fixes. [Release Notes](https://blog.rust-lang.org/2026/07/16/Rust-1.97.1/) |
 | Zig ⚡ | 0.16 | Zig is a general-purpose programming language and toolchain for maintaining robust, optimal, and reusable software. [Release Notes](https://ziglang.org/download/0.16.0/release-notes.html)|
+
+#### OpenJDK
+
+- OpenJDK 27 is available in the `openjdk-27` package.
+- Ubuntu OpenJDK [JRE](https://hub.docker.com/r/ubuntu/jre) and [JDK](https://hub.docker.com/r/ubuntu/jdk) rock images are available for OpenJDK 25.
 
 ### Enterprise features
 
@@ -337,6 +352,12 @@ maintainable and memory-safe foundation.
 :::{note}
 `gpg` and `gpgv` are still available in the main repository as of Ubuntu 26.10.
 :::
+
+#### OpenSSL 4
+
+OpenSSL 4 introduces Encrypted Client Hello (ECH), expanded QUIC support, continued post-quantum cryptography improvements, and further API and architectural cleanup. It also includes various security and bug fixes through the 4.0.3 release, along with improved support for modern TLS features and hardware.
+
+See the [4.0.0](https://github.com/openssl/openssl/releases/tag/openssl-4.0.0), [4.0.1](https://github.com/openssl/openssl/releases/tag/openssl-4.0.1), [4.0.2](https://github.com/openssl/openssl/releases/tag/openssl-4.0.2), and [4.0.3](https://github.com/openssl/openssl/releases/tag/openssl-4.0.3) upstream release notes for full details.
 
 ### Hardware support features
 
@@ -378,9 +399,38 @@ The `virt-stack` gains performance resilience, architecture agility, and hardeni
 
 ### System features
 
-#### Linux kernel \<VERSION\>
+#### Linux kernel 7.3 🐧
 
-#### systemd \<VERSION\>
+Ubuntu 26.10 ships with the Linux kernel 7.3. Because the final upstream 7.3 release is due after GA, the kernel in the release images (`7.3.0-9.9`) is based on `7.3-rc6`.
+
+Notable Ubuntu kernel changes since Ubuntu 26.04 LTS:
+
+* Snapdragon laptops and desktops ([LP: #2167217](https://bugs.launchpad.net/ubuntu/+source/linux/+bug/2167217), [LP: #2144643](https://bugs.launchpad.net/ubuntu/+source/linux/+bug/2144643), [LP: #2121477](https://bugs.launchpad.net/ubuntu/+source/linux/+bug/2121477)):
+  * Early support for Snapdragon X2 Elite laptops: Asus Zenbook A14 (UX3407NA), HP EliteBook X G2q 14 AI, and Lenovo Yoga Slim 7x Gen 11.
+  * Support for more Snapdragon X Elite and X Plus devices: Lenovo IdeaCentre Mini 01Q8X10 (Snapdragon X Plus model), Lenovo IdeaPad Slim 5x 14Q8X9, HP EliteBook 6 G1q, Acer Swift 14 AI (SF14-11), and Acer Swift Go 14 AI (SFG14-01).
+  * Support for the built-in cameras of several Snapdragon X Elite laptops, including the Lenovo ThinkPad T14s, Lenovo Yoga Slim 7x, Dell XPS 13 9345, Dell Inspiron 14 7441, and Asus Zenbook A14.
+* Enablement for upcoming AMD Zen 6 client platforms: HSMP client interface ([LP: #2167555](https://bugs.launchpad.net/ubuntu/+source/linux/+bug/2167555)), CPPC boost frequencies ([LP: #2167550](https://bugs.launchpad.net/ubuntu/+source/linux/+bug/2167550)), EPP tuning ([LP: #2167558](https://bugs.launchpad.net/ubuntu/+source/linux/+bug/2167558)), fTPM ([LP: #2167552](https://bugs.launchpad.net/ubuntu/+source/linux/+bug/2167552)), and the Sensor Fusion Hub ([LP: #2167219](https://bugs.launchpad.net/ubuntu/+source/linux/+bug/2167219)).
+* Intel platforms:
+  * Support for the TI TAC5xx2 audio codec on Intel Nova Lake platforms ([LP: #2167689](https://bugs.launchpad.net/ubuntu/+source/linux/+bug/2167689)).
+  * Support for the Samsung S5K3J1 camera sensor on Intel MIPI camera platforms ([LP: #2121852](https://bugs.launchpad.net/ubuntu/+source/linux/+bug/2121852)).
+  * An additional 900 MHz link frequency for the OmniVision OV05C10 camera sensor ([LP: #2147409](https://bugs.launchpad.net/ubuntu/+source/linux/+bug/2147409)).
+* The amd64 and arm64 kernels now ship SPDX Software Bills of Materials (SBOM). The `linux-buildinfo-*` package of each kernel installs `sbom-source.spdx.json.zst`, `sbom-build.spdx.json.zst`, and `sbom-output.spdx.json.zst` under `/usr/lib/linux/<version>-<flavour>/`.
+* GPIB (IEEE 488) instrument drivers are now built for amd64 ([LP: #2152714](https://bugs.launchpad.net/ubuntu/+source/linux/+bug/2152714)).
+* EROFS page cache sharing between files with identical content (experimental) is enabled ([LP: #2158501](https://bugs.launchpad.net/ubuntu/+source/linux/+bug/2158501)).
+* Prebuilt out-of-tree kernel modules:
+  * ZFS has been updated to 2.4.4.
+  * DOCA-OFED 3.5 kernel modules are available.
+  * Lustre 2.17.58 kernel modules are now prebuilt for the generic kernel on amd64.
+* NVIDIA drivers:
+  * Prebuilt kernel modules are available for the 580 and 615 driver series, including the `-server` variants.
+  * The 615 series replaces 595 and 610, including their `-server` variants. On upgrade, transitional packages move systems that use them to 615, for both the DKMS packages and the prebuilt kernel modules.
+  * The 615 series ships only the open kernel modules, which support Turing and newer GPUs: `nvidia-driver-615` and `nvidia-driver-615-server` are now transitional packages for `nvidia-driver-615-open` and `nvidia-driver-615-server-open`. The 580 series still ships both the proprietary and the open kernel modules.
+
+#### systemd 261.3
+
+The `systemd` service manager has been updated to version 261. For a complete list of changes, see the [changelog](https://github.com/systemd/systemd/releases/tag/v261).
+
+See also {ref}`support-for-legacy-system-v-scripts-removed`.
 
 #### 100% Rust `coreutils`
 
@@ -451,6 +501,12 @@ See the [HAProxy 3.3](https://www.haproxy.com/blog/announcing-haproxy-3-3) and [
 ### Platforms
 
 ### System changes
+
+
+(support-for-legacy-system-v-scripts-removed)=
+#### Support for legacy System V scripts removed
+
+As announced in previous {ref}`release notes <ubuntu-26.04-lts-release-notes>`, the component `systemd-sysv-generator` for creating systemd services from `/etc/init.d` scripts at runtime has been removed. Packages in the Ubuntu Archive that were previously relying on this component either now ship a systemd service, or have been removed if they were no longer maintained.
 
 
 ## Deprecated features
@@ -619,5 +675,9 @@ Showtime may not display subtitles, or video playback may stall when subtitle pl
 
 
 ## Official flavors
+
+Find the release notes for the official flavors at the following links:
+
+* [Ubuntu Budgie Release Notes](https://ubuntubudgie.org/blog/ubuntu-budgie-2610-release-notes/)
 
 ## More information

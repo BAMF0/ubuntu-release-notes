@@ -189,6 +189,15 @@ You can install the app manually with the following command:
 sudo apt install software-properties-gtk
 ```
 
+### NVIDIA drivers
+
+You can install NVIDIA drivers as follows:
+
+* The fastest way to get a driver is: `sudo ubuntu-drivers install --recommended`
+* The supported way to get the latest driver is: `sudo ubuntu-drivers install nvidia:595`
+* You can get back the old GUI with: `sudo apt install software-properties-gtk`
+* The only drivers Ubuntu supports officially are those installed by the above methods.
+
 ### App Center enhancements
 :::{versionadded} 24.10
 :::
@@ -1257,6 +1266,13 @@ APT now provides an interface for viewing and manipulating its command history.
     Upgrading: 0, Installing: 0, Removing: 4, Not Upgrading: 0
     Freed space: 8119 kB
     ```
+
+### The `pkcon` command has been removed
+:::{versionremoved} 26.04
+:::
+
+```{include} /reuse/26.04/pkcon-removed.txt
+```
 
 ### Dracut
 :::{versionchanged} 25.10

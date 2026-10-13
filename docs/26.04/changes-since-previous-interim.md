@@ -562,6 +562,12 @@ Ubuntu 26.04 LTS is shipping with the Linux kernel 7.0, based on the upstream fi
 
 Other features can be found in the [Linux 7.0 upstream changelog](https://kernelnewbies.org/Linux_7.0).
 
+#### Support for new Intel processors
+
+Resolute brings full support for Intel® Core™ Ultra Series 3 processors (codenamed Panther Lake), Intel® Core™ Series 3 processors (codenamed Wildcat Lake), and Intel® Xeon® 6+ processors (codenamed Clearwater Forest).
+
+Resolute adds initial support for Intel next-generation client processor (codenamed Nova Lake) and Xeon® server processor (codenamed Diamond Rapids).
+
 #### sudo-rs
 
 Password feedback is now enabled by default in order to improve the user experience of `sudo`.
@@ -836,6 +842,11 @@ On the IBM Z (s390s) architecture, the architectural level set (ALS) was raised 
 
 IBM Z generation z14 (LinuxONE II) is still supported by Ubuntu Server 24.04 LTS for up to 15 years in total.
 
+#### `pkcon` replaced with `pkgcli`
+
+```{include} /reuse/26.04/pkcon-removed.txt
+```
+
 
 ## Deprecated features
 
@@ -998,6 +1009,12 @@ For other known issues, see [FDE specific bug reports](https://bugs.launchpad.ne
 #### Classic fonts
 
 Installing `ubuntu-fonts-classic` results in a non-Ubuntu font being displayed ([LP#2083683](https://bugs.launchpad.net/bugs/2083683)). To resolve this, install `gnome-tweaks` and set ‘Interface Text’ to ‘Ubuntu’.
+
+#### The "Foreign Packages Installed" prompt is too long to scroll
+
+When upgrading from Ubuntu 24.04 LTS to Ubuntu 26.04 LTS, the "Foreign Packages Installed" prompt can show a package list so long that it cannot be scrolled down to reach the options.
+
+As a workaround, press Enter to cancel the upgrade, remove the unneeded foreign packages, and start the upgrade again. In the reported case, the list consisted mostly of `erlang*` packages, which `sudo apt purge erlang*` removed. Once the list is shorter, the options to continue (`[no]` / `[yes]`) become visible.
 
 
 ### Server issues
