@@ -25,6 +25,67 @@ Release schedule <schedule>
 
 ### Desktop features
 
+#### GNOME 51
+
+Highlights across the desktop include:
+
+* **Performance:** many enhancements to bring a smoother, more responsive desktop.
+* **Displays** remembers monitor brightness across reboots and HDR changes. Frame scheduling improvements make animations smoother under load, and monitor arrangement uses improved center-aligned snapping.
+* **Settings** adds an automatic screen rotation and orientation lock on devices with an accelerometer, improves display arrangement, and can disable the touchpad automatically when a mouse is connected. Network settings now support DNS search domains, and fingerprint enrollment has an improved interface.
+* **Files** gives a count when dragging multiple files, improves selection behavior, groups file notifications, and performs some file operations more responsively.
+* **Calendar** is more responsive, especially in Month view, and uses less data when syncing.
+* **Remote Desktop** supports remote smartcard use and Kerberos authentication. Remote Login also supports SSH socket-activated servers.
+* **Papers** can add visual signatures to documents. These are annotations and do not cryptographically verify a document's authenticity.
+
+For more information, see the [GNOME 51 release notes](https://release.gnome.org/51/).
+
+#### Accessibility improvements and fixes
+
+Accessibility has been improved across GNOME, App Center, the desktop shell and the Flutter toolkit.
+
+GNOME 51 comes with many accessibility enhancements:
+
+* The Reduced Motion setting has been extended to more parts of the desktop.
+* Users can adjust screenshot selections with the keyboard
+* Orca announcements and app-grid navigation have been improved.
+* The Accessibility settings gain an option to disable the focus-ring timeout.
+
+#### New desktop wallpapers
+
+Ubuntu 26.10 includes new Stonking Stingray wallpapers, including designs selected through the community wallpaper competition. See the [wallpaper announcement](https://ubuntu.com/blog/grace-on-the-currents-stonking-stingray).
+
+#### Ubuntu Certified hardware status in Settings
+
+Settings can show whether a computer is certified for Ubuntu.
+
+The status is checked using the Ubuntu Hardware API, with caching to avoid unnecessary repeated checks. The `hwctl` client is included as a snap.
+
+For information about hardware data used for certification checks, see the [System Information Notice](https://canonical.com/legal/systems-information-notice#metrics-collected-by-ubuntu-certified-client).
+
+#### A unified app-details view in App Center
+
+App Center now presents Snap and Debian package details in a unified app-details view. It brings information such as the publisher, ratings, permissions, version, package size, screenshots, and description together, with the relevant install, open, or uninstall action.
+
+#### Driver management in App Center
+
+App Center adds a dedicated Drivers page where you can review the available graphics drivers, including NVIDIA driver branches.
+
+Driver choices are presented with clearer metadata to help you compare the options. Available choices depend on the system's hardware and enabled software sources.
+
+#### On-demand multimedia codecs
+
+App Center can install the codecs needed for one-time playback when a media file uses a codec that is not installed. Some high-quality codecs are proprietary and are not included in the default installation.
+
+#### Myna speech-to-text preview
+
+Myna is an early speech-to-text preview for Ubuntu Desktop.
+
+Hold a configurable key to dictate into the focused app. The transcription runs locally, with no audio sent to a network service.
+
+Myna is not preinstalled, and its features may change before stable release.
+
+Read the [Myna technology preview announcement](https://ubuntu.com/blog/myna-speech-to-text-technology-preview-available).
+
 #### TPM-backed FDE without a hardware root of trust
 
 Computers without a hardware root of trust can now be installed with TPM-backed full disk encryption (FDE), provided that a PIN or passphrase is also set on the TPM-backed key.
@@ -397,6 +458,12 @@ To switch between the Rust and GNU implementations of coreutils, refer to {ref}`
 
 ### Desktop changes
 
+#### WEP Wi-Fi security is no longer supported in Settings
+
+GNOME 51 removes support in Settings for connecting to Wi-Fi networks that use Wired Equivalent Privacy (WEP).
+
+WEP is an obsolete and insecure wireless security standard. Use a network configured with a modern security protocol instead.
+
 ### Server changes
 
 #### OpenSSH split between two packages
@@ -448,8 +515,6 @@ See the [HAProxy 3.3](https://www.haproxy.com/blog/announcing-haproxy-3-3) and [
 
 ### Development changes
 
-### Enterprise changes
-
 ### Cloud changes
 
 ### OpenStack
@@ -467,8 +532,6 @@ As announced in previous {ref}`release notes <ubuntu-26.04-lts-release-notes>`, 
 
 ## Deprecated features
 
-### Desktop deprecations
-
 ### Server deprecations
 
 #### BerkeleyDB deprecated in Postfix
@@ -478,8 +541,6 @@ BerkeleyDB support has been deprecated in Postfix. This affects the `hash:` and 
 See [Postfix Non-Berkeley-DB migration](https://www.postfix.org/NON_BERKELEYDB_README.html) for more information.
 
 ### Development deprecations
-
-### Enterprise deprecations
 
 ### Cloud deprecations
 
@@ -493,6 +554,34 @@ See [Postfix Non-Berkeley-DB migration](https://www.postfix.org/NON_BERKELEYDB_R
 ## Bug fixes
 
 ### Desktop fixes
+
+#### Fixes to updates and package details in App Center
+
+App Center filters out phased updates that are not yet available to a system, avoiding misleading update entries. Debian package details also open more reliably when the PackageKit service has stopped and restarted.
+
+#### Desktop icons remain visible after a release upgrade
+
+Fixed an issue where desktop icons sometimes disappeared after upgrading Ubuntu. See [LP: #2164884](https://bugs.launchpad.net/bugs/2164884).
+
+#### Improved rendering with fractionally scaled monitors
+
+Fixed a Mutter issue that could cause a black screen or invalid page flips when using vertically arranged monitors with fractional scaling. See [Mutter merge request 3786](https://gitlab.gnome.org/GNOME/mutter/-/merge_requests/3786).
+
+#### Faster loading of desktop icons
+
+Fixed an issue that could leave icons blank or make them take several seconds to appear. See [LP: #2162035](https://bugs.launchpad.net/bugs/2162035).
+
+#### Correctly apply the desktop theme
+
+Fixed an issue where the selected theme was not applied correctly. See [LP: #2161877](https://bugs.launchpad.net/bugs/2161877).
+
+#### Local password sign-in after device authentication
+
+Fixed a GNOME Shell issue where the local password entry could fail to appear after device authentication. Users can now continue signing in with their local password when required. See [LP: #2160622](https://bugs.launchpad.net/ubuntu/+source/gnome-shell/+bug/2160622).
+
+#### Active Directory setup in autoinstall
+
+Previously, an automatic installation (autoinstall) with an interactive identity and Active Directory sections sometimes failed to ask for the Active Directory password. As a consequence, the computer didn't join to the domain. With this fix, the installer now presents the required Active Directory step. See [LP: #2065109](https://bugs.launchpad.net/subiquity/+bug/2065109).
 
 ### Server fixes
 
@@ -542,8 +631,6 @@ On the packaging side, squid now builds against OpenSSL 4.
 
 ### Development fixes
 
-### Enterprise fixes
-
 ### Cloud fixes
 
 ### Security fixes
@@ -557,11 +644,57 @@ On the packaging side, squid now builds against OpenSSL 4.
 
 ### Desktop issues
 
+#### Some upgrades might stop on a dangling `/lib32` symlink
+
+On systems with a dangling `/lib32` symbolic link, the upgrade might stop while installing the `base-files` package.
+
+This has been reported on systems upgraded from older Ubuntu releases, including during an upgrade to 26.04.
+
+The `ubuntu-release-upgrader` fix for Stonking is still in progress. The exact impact on upgrades from 26.04 to 26.10 is not yet clear. See [LP: #2131303](https://bugs.launchpad.net/bugs/2131303).
+
+#### Future upgrades might be blocked for unsupported `/boot` configurations
+
+In a future Ubuntu release, the boot loader will drop support for some less-common `/boot` configurations, including encrypted `/boot`, RAID-5/6, Apple partition tables, and file systems such as Btrfs, HFS+, XFS, and ZFS.
+
+If you use such a `/boot` configuration, future Ubuntu releases might not be able to start on your system.
+
+Work is under way to have the release upgrader detect affected systems and block an unsafe upgrade. See [LP: #2170211](https://bugs.launchpad.net/bugs/2170211).
+
+#### Legacy GRUB changes might prevent booting with TPM-backed full-disk encryption
+
+On systems using [TPM-backed full-disk encryption](https://ubuntu.com/desktop/docs/en/latest/explanation/hardware-backed-disk-encryption/) (TPM/FDE), the `snapd` service manages the boot configuration. Running `update-grub` after applying conventional GRUB customizations might leave your system unable to boot. The Stonking fix is still in progress. See [LP: #2157702](https://bugs.launchpad.net/bugs/2157702).
+
+#### TPM-backed encrypted autoinstall might fail in virtual machines
+
+When you run an automatic installation (autoinstall) with TPM-backed full-disk encryption in a virtual machine, the `accepted-errors: running-in-vm` option might fail with an installer error. The fix is in progress. See [LP: #2170594](https://bugs.launchpad.net/bugs/2170594).
+
+#### Display freezes on some AMD dual-GPU laptops
+
+On some laptops with both AMD integrated graphics and a discrete GPU, the built-in display might freeze when panel self-refresh is active, particularly when an external display is connected. See [LP: #2162904](https://bugs.launchpad.net/bugs/2162904).
+
+#### Wi-Fi instability on some Intel AX211 systems
+
+Some systems with Intel Wi-Fi 6E AX211 might experience firmware crashes and dropped Wi-Fi connections. The issue is hardware-specific and remains under investigation for Stonking. See [LP: #2157682](https://bugs.launchpad.net/bugs/2157682).
+
+#### Keyboard might not work on some Snapdragon X2 Elite laptops
+
+Due to a regression in Linux 7.3, the kernel sometimes selects an incorrect keyboard clock rate on some Snapdragon X2 Elite laptops. As a consequence, the built-in keyboard is unusable, including in the live installer. A fix is being investigated. See [LP: #2169765](https://bugs.launchpad.net/bugs/2169765).
+
+#### Intel IPU cameras might fail during early boot or suspend
+
+On some systems with Intel IPU6 or IPU7 cameras, necessary firmware might not be included in the `initramfs` image when the driver is loaded early. As a consequence, the camera driver fails to start.
+
+Some Dell systems using the Intel IPU7 camera stack might also fail to suspend after camera activity.
+
+These issues apply only to systems using the affected camera drivers. See [LP: #2164611](https://bugs.launchpad.net/bugs/2164611) and [LP: #2158228](https://bugs.launchpad.net/bugs/2158228).
+
+#### Subtitles might not work in Showtime
+
+The Showtime video player might not display subtitles, and video playback might stall when you change subtitle playback. The issue is being addressed in the GStreamer base plugins. See [LP: #2119649](https://bugs.launchpad.net/bugs/2119649).
+
 ### Server issues
 
 ### Development issues
-
-### Enterprise issues
 
 ### Cloud issues
 
