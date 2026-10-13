@@ -350,6 +350,36 @@ connections.
 
 ### Enterprise features
 
+#### authd 0.7.1
+
+- Users can now [sign in with their Microsoft Entra ID password](https://discourse.ubuntu.com/t/microsoft-entra-id-password-and-mfa-sign-in-comes-to-ubuntu/88342) and complete the MFA challenge on the desktop, in terminal and SSH sessions, and in Polkit dialogs using Microsoft Authenticator approvals or one-time codes from authenticator apps. See how to [enable the new Entra authentication flow](https://ubuntu.com/docs/authd/stable-docs/howto/configure-authd/?broker=msentraid#ref-config-auth-flows).
+- The new Entra authentication flow also supports passwordless sign-in with FIDO2 security keys, Microsoft Authenticator or Temporary Access Passes.
+- New [`authctl` commands](https://ubuntu.com/docs/authd/stable-docs/reference/cli/) were added to change a user's home directory, change their login shell, and delete users and groups.
+- New [how-to guides](https://ubuntu.com/docs/authd/stable-docs/howto/index-user-management/) cover common user management tasks, such as onboarding, locking, offboarding and local password changes.
+- The GNOME keyring unlocks automatically at login.
+- authd identifies local accounts by a stable provider ID instead of the email address.
+- Broker configuration checks reject unknown settings and unsafe file permissions, while configurations from earlier releases keep working.
+- When the broker fails to start, logins fail immediately with an actionable message instead of a long timeout.
+- Managed users stay visible on the desktop login screen after reboot.
+- Administrators can configure delays after failed authentication per PAM service in `/etc/authd/authd.yaml`.
+
+#### ADSys 0.17.0
+
+- Machines can now enroll certificates [directly against Active Directory Certificate Services](https://ubuntu.com/docs/adsys/latest/how-to/certificates/) over LDAP and MS-ICPR. The client no longer needs certmonger or CEPCES, and the Windows server needs no Certificate Enrollment web service.
+- Added `adsysctl certificate` commands to inspect and manage enrolled certificates; `verify --online` performs a best-effort revocation check.
+- Added [dynamic placeholders](https://ubuntu.com/docs/adsys/latest/explanation/dynamic-values/), such as `${USER}`, `${HOSTNAME}` or `${DOMAIN}`, to GPO values, expanded locally when the policy is applied.
+- The Global Catalog is now queried for group membership, so policies apply to users and computers in groups from another domain of the forest, such as Enterprise Admins in the forest root.
+- dconf policies are restored for users logging in with their short name when SSSD is configured with `use_fully_qualified_names = False` ([LP: #2107971](https://bugs.launchpad.net/ubuntu/+source/adsys/+bug/2107971)), and `dconf update` failures that leave the policy databases missing or stale are now reported rather than silently ignored; a broken database outside ADSys only logs a warning and does not block AD logins.
+- Fall back to the next server in the SSSD `ad_server` list when a domain controller is unreachable, so GPO lookups succeed.
+- Apply scripts and AppArmor profiles authored on Windows with CRLF line endings or a UTF-8 BOM.
+- Reject unsupported Kerberos credential cache types, such as `KCM:` or `KEYRING:`, with a clear error instead of treating them as file paths.
+- Allow greeter sessions running as a dynamic user, and keep the greeter's vendor defaults.
+- Match certificate auto-enrollment settings case-insensitively, so GPOs that store the registry keys with a different casing are no longer silently ignored ([LP: #2169074](https://bugs.launchpad.net/ubuntu/+source/adsys/+bug/2169074)).
+- Retry policy scripts the kernel still reports as busy, so they are no longer skipped.
+- Fixed a deadlock that could hang `adsysctl service cat` and the daemon output forwarding.
+- Added the missing `python3-requests` dependency for the CEPCES certificate enrollment script.
+- Install binaries, systemd units and the PAM module in their canonical `/usr` locations instead of the aliased `/sbin` and `/lib` directories ([LP: #2139162](https://bugs.launchpad.net/ubuntu/+source/adsys/+bug/2139162)).
+
 ### Cloud features
 
 ### Security features
