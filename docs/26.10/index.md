@@ -698,6 +698,27 @@ The Showtime video player might not display subtitles, and video playback might 
 
 ### Server issues
 
+#### OpenSSH package purge can break openssh
+
+Do not purge an openssh package that is in "`rc`" state until the update in bug [LP: #2169738](https://bugs.launchpad.net/ubuntu/+source/openssh/+bug/2169738) is released.
+
+The OpenSSH package was split into GSSAPI/Kerberos and non-GSSAPI/Kerberos variants, and they conflict with each other:
+ * `openssh-server` conflicts with `openssh-server-gssapi`
+ * `openssh-client` conflicts with `openssh-client-gssapi`
+
+When switching from one package to its counterpart, the conflicted package will be removed (not purged), and stay in the "`rc`" state. This is correct and expected.
+
+For example, if you had `openssh-server` installed, and switched to `openssh-server-gssapi`, this is how both packages would be listed:
+
+```text
+rc  openssh-server         ...
+ii  openssh-server-gssapi  ...
+```
+
+If, however, while in this state, the removed package is **purged**, that will break the openssh configuration due to the removal of essential files still needed by the counterpart package, and **remote access may be lost**. This is the case for both server and client openssh packages.
+
+This is being tracked in bug [LP: #2169738](https://bugs.launchpad.net/ubuntu/+source/openssh/+bug/2169738). For the Stonking release, only [openssh-gssapi](https://launchpad.net/ubuntu/+source/openssh-gssapi) was fixed, while [openssh](https://launchpad.net/ubuntu/+source/openssh) will be available as an SRU. Once that update lands, the purge action will work correctly and no longer break the existing configuration that is needed by the counterpart package.
+
 ### Development issues
 
 ### Cloud issues
