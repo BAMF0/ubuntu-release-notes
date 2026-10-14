@@ -714,5 +714,6 @@ The Showtime video player might not display subtitles, and video playback might 
 Find the release notes for the official flavors at the following links:
 
 * [Ubuntu Budgie Release Notes](https://ubuntubudgie.org/blog/ubuntu-budgie-2610-release-notes/)
+* [Xubuntu Release Notes](https://xubuntu.org/releasedocs/26.10/release-notes/)
 
 ## More information
