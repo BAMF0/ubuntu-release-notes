@@ -766,6 +766,7 @@ Find the release notes for the official flavors at the following links:
 
 * [Ubuntu Budgie Release Notes](https://ubuntubudgie.org/blog/ubuntu-budgie-2610-release-notes/)
 * [Ubuntu Cinnamon Release Notes](https://ubuntucinnamon.org/ubuntu-cinnamon-26-10-stonking-stingray-release-notes/)
+* [Ubuntu Kylin Release Notes](https://www.ubuntukylin.com/news/ubuntukylin2610-en.html)
 * [Xubuntu Release Notes](https://xubuntu.org/releasedocs/26.10/release-notes/)
 
 ## More information
